@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#f47245">
+<title>Math Fun Quiz - Grade 1 | Chapter 5-8</title>
+<style>
+:root{
+  --primary:#f47245;
+  --primary-dark:#c9542c;
+  --accent:#6c5ce7;
+  --ink:#1e293b;
+  --muted:#7c8aa0;
+  --line:#f0e4df;
+  --green:#22c55e;
+  --red:#ef5350;
+  --card:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:linear-gradient(155deg,#ffb86b 0%,#f47245 52%,#d94f70 100%);
+  color:var(--ink);display:flex;justify-content:center;align-items:flex-start;
+  padding:14px;min-height:100%;
+}
+.app{
+  width:100%;max-width:480px;background:#fffaf7;border-radius:26px;
+  box-shadow:0 22px 60px rgba(90,35,20,.33);overflow:hidden;
+  display:flex;flex-direction:column;height:calc(100vh - 28px);min-height:0;position:relative;
+}
+.topbar{
+  background:linear-gradient(120deg,var(--primary),#e05a6d);color:#fff;
+  padding:18px 20px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex:0 0 auto;
+}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand .logo{width:42px;height:42px;border-radius:13px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:23px;flex:0 0 auto}
+.brand h1{font-size:16px;line-height:1.15;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand p{font-size:10.5px;opacity:.85;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{width:40px;height:40px;border-radius:12px;border:0;background:rgba(255,255,255,.18);color:#fff;font-size:18px;cursor:pointer;flex:0 0 auto;transition:transform .12s}
+.icon-btn:active{transform:scale(.92)}
+.progress-wrap{padding:14px 20px 4px;flex:0 0 auto}
+.progress-meta{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:7px}
+.progress-meta strong{color:var(--primary-dark)}
+.bar{height:10px;border-radius:99px;background:#f3e6e0;overflow:hidden}
+.bar > i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#6c5ce7,#f47245);transition:width .35s ease}
+.screen{display:none;flex:1;flex-direction:column;padding:18px 20px 22px;overflow-y:auto;min-height:0;-webkit-overflow-scrolling:touch}
+.screen.active{display:flex;animation:fade .28s ease}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* start */
+.hero{text-align:center;padding:6px 0 2px}
+.hero .big-emoji{font-size:56px;line-height:1;display:block;margin-bottom:7px;animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+.hero h2{font-size:24px;font-weight:850;letter-spacing:-.4px}
+.hero h2 span{color:var(--primary)}
+.hero p{color:var(--muted);font-size:12.5px;margin-top:6px;line-height:1.45}
+.mode-card{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:18px;padding:12px;margin-top:10px;cursor:pointer;transition:transform .12s;box-shadow:0 4px 12px rgba(80,40,20,.05)}
+.mode-card:active{transform:scale(.98)}
+.mode-card .mi{font-size:32px;flex:0 0 auto;width:46px;text-align:center}
+.mode-card b{font-size:14.5px;display:block;color:#233046}
+.mode-card small{font-size:11px;color:var(--muted);display:block;margin-top:3px;line-height:1.35}
+.mode-card .arrow{margin-left:auto;color:var(--primary);font-weight:900;font-size:20px}
+.section-title{font-size:11px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin:16px 0 8px}
+.topic-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.topic-item{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:10px;display:flex;align-items:center;gap:8px}
+.topic-item .em{font-size:20px;flex:0 0 auto}
+.topic-item span{font-size:11px;font-weight:700;line-height:1.25;color:#3b475f}
+.topic-item small{display:block;font-size:9.5px;color:var(--muted);font-weight:600;margin-top:2px}
+.hint-small{text-align:center;font-size:11px;color:var(--muted);margin-top:12px}
+/* question */
+.question-card{background:var(--card);border-radius:22px;padding:17px 16px 16px;box-shadow:0 6px 18px rgba(80,40,20,.08);border:1.5px solid var(--line);text-align:center}
+.topic-badge{display:inline-block;font-size:10.5px;font-weight:800;color:var(--primary-dark);background:#fff0e8;border-radius:99px;padding:6px 12px;margin-bottom:11px}
+.q-emoji{font-size:46px;line-height:1;margin-bottom:9px;display:block}
+.q-text{font-size:17.5px;font-weight:800;line-height:1.35;color:#233046}
+.q-id{font-size:12.5px;color:var(--muted);margin-top:6px;line-height:1.4}
+.speak-q{margin:9px auto 0;border:0;background:#fff0e8;color:var(--primary-dark);border-radius:99px;padding:7px 13px;font-size:12px;font-weight:800;cursor:pointer}
+.options{display:flex;flex-direction:column;gap:9px;margin-top:15px}
+.opt{display:flex;align-items:center;gap:12px;text-align:left;background:#fff;border:2px solid var(--line);border-radius:15px;padding:11px 13px;min-height:55px;cursor:pointer;transition:transform .12s,border-color .2s,background .2s;font-size:15px;font-weight:700;color:#2b3650;width:100%}
+.opt:active{transform:scale(.98)}
+.opt .letter{width:31px;height:31px;flex:0 0 auto;border-radius:10px;background:#fff0e8;color:var(--primary-dark);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:850}
+.opt.correct{background:#e9fbf0;border-color:var(--green);color:#166534}
+.opt.correct .letter{background:var(--green);color:#fff}
+.opt.wrong{background:#ffeded;border-color:var(--red);color:#991b1b}
+.opt.wrong .letter{background:var(--red);color:#fff}
+.opt.dim{opacity:.55}
+.feedback{display:none;margin-top:13px;border-radius:14px;padding:11px 13px;font-size:12.5px;font-weight:700;line-height:1.45;align-items:flex-start;gap:9px;text-align:left}
+.feedback.show{display:flex;animation:fade .25s ease}
+.feedback.ok{background:#e9fbf0;color:#166534}
+.feedback.no{background:#fff0f0;color:#991b1b}
+.feedback .fi{font-size:18px;line-height:1}
+.btn{border:0;border-radius:16px;min-height:55px;font-size:15.5px;font-weight:800;color:#fff;background:linear-gradient(120deg,var(--primary),#e05a6d);box-shadow:0 8px 20px rgba(244,114,69,.3);cursor:pointer;transition:transform .12s;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;flex:0 0 auto}
+.btn:active{transform:scale(.97)}
+.btn.purple{background:linear-gradient(120deg,#6c5ce7,#a66cf0);box-shadow:0 8px 20px rgba(108,92,231,.3)}
+.btn.ghost{background:#fff;color:var(--primary-dark);border:2px solid var(--primary);box-shadow:none}
+.next-btn{display:none}
+.next-btn.show{display:flex}
+/* clock */
+.clock-card{background:#fff;border-radius:22px;padding:14px 14px 16px;border:1.5px solid var(--line);box-shadow:0 6px 18px rgba(80,40,20,.08);text-align:center}
+.clock-wrap{display:flex;justify-content:center;margin:6px 0 2px}
+#clockSvg{width:min(100%,232px);height:auto;touch-action:none;user-select:none}
+.hand{cursor:grab}
+.hand:active{cursor:grabbing}
+.knob{cursor:grab}
+.digital{font-size:28px;font-weight:900;color:var(--primary-dark);letter-spacing:1px;margin:2px 0 4px}
+.digital small{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:0}
+.block-label{font-size:10.5px;font-weight:850;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);margin:12px 0 6px;text-align:left}
+.hour-pad{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.hour-btn{border:1.5px solid var(--line);background:#fff;border-radius:11px;min-height:38px;font-size:14px;font-weight:850;color:#3b475f;cursor:pointer}
+.hour-btn:active{transform:scale(.94)}
+.hour-btn.pick{background:var(--primary);border-color:var(--primary);color:#fff}
+.min-row{display:flex;gap:8px}
+.min-btn{flex:1;border:2px solid var(--line);background:#fff;border-radius:13px;padding:9px 4px;font-size:12.5px;font-weight:800;color:#3b475f;cursor:pointer}
+.min-btn.pick{border-color:var(--accent);background:#f0edff;color:#4b3bb0}
+.write-chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+.wchip{border:2px solid var(--line);background:#fff;border-radius:99px;padding:8px 13px;font-size:12.5px;font-weight:800;color:#3b475f;cursor:pointer}
+.wchip.pick{border-color:var(--primary);background:#fff0e8;color:var(--primary-dark)}
+.clock-footer{position:sticky;bottom:-22px;z-index:4;margin:auto -20px -22px;padding:10px 20px 16px;background:linear-gradient(to top,#fffaf7 82%,rgba(255,250,247,0))}
+.clock-footer .btn{margin-top:0}
+/* result */
+.result{text-align:center;padding-top:4px}
+.result .medal{font-size:62px;line-height:1;display:block;margin-bottom:4px;animation:pop .5s cubic-bezier(.2,1.5,.4,1)}
+@keyframes pop{from{transform:scale(.3);opacity:0}to{transform:scale(1);opacity:1}}
+.result h2{font-size:25px;font-weight:850}
+.result .sub{color:var(--muted);font-size:12.5px;margin-top:3px}
+.score-box{margin:15px 0 13px;background:#fff;border:2px solid var(--line);border-radius:20px;padding:16px;display:flex;align-items:center;justify-content:center;gap:18px}
+.score-num{font-size:42px;font-weight:900;color:var(--primary);line-height:1}
+.score-num small{font-size:17px;color:var(--muted);font-weight:700}
+.score-div{width:1px;height:48px;background:var(--line)}
+.pct-num{font-size:34px;font-weight:900;color:var(--accent);line-height:1}
+.stars{font-size:20px;letter-spacing:3px;margin-top:3px}
+.breakdown{background:#fff;border:1.5px solid var(--line);border-radius:17px;padding:13px;text-align:left}
+.breakdown h3{font-size:11.5px;text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:9px}
+.br-row{margin-bottom:8px}
+.br-row:last-child{margin-bottom:0}
+.br-top{display:flex;justify-content:space-between;font-size:11.5px;font-weight:700;margin-bottom:4px;gap:8px}
+.br-top span:last-child{color:var(--muted);white-space:nowrap}
+.br-bar{height:7px;border-radius:99px;background:#f1ecea;overflow:hidden}
+.br-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#4ade80,#22c55e);width:0;transition:width .6s ease}
+.result-btns{display:flex;gap:10px;margin-top:auto;padding-top:16px}
+.result-btns .btn{flex:1}
+.confetti{position:absolute;top:-12px;width:9px;height:14px;border-radius:2px;pointer-events:none;z-index:5;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg);opacity:.9}}
+@media (min-width:520px){body{padding:24px}.app{height:calc(100vh - 48px)}}
+@media (max-height:720px){.hero .big-emoji{font-size:42px}.q-emoji{font-size:38px}}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <div class="topbar">
+    <div class="brand">
+      <div class="logo">➗</div>
+      <div style="min-width:0"><h1>Math Fun Quiz</h1><p>Cambridge Primary · Grade 1 · Ch. 5–8</p></div>
+    </div>
+    <button class="icon-btn" id="soundBtn" title="Suara">🔊</button>
+  </div>
+
+  <!-- START -->
+  <section class="screen active" id="screenStart">
+    <div class="hero">
+      <span class="big-emoji">🧮</span>
+      <h2>Let's Count <span>&amp; Learn!</span></h2>
+      <p>Chapter 5: Add &amp; subtract · Chapter 6: Position<br>Chapter 7: Venn diagrams · Chapter 8: Days &amp; clocks</p>
+    </div>
+    <div class="section-title">Pilih mode bermain</div>
+    <button class="mode-card" id="mcModeBtn">
+      <span class="mi">📝</span>
+      <span><b>Multiple Choice</b><small>24 soal · ada kunci jawaban &amp; penjelasan</small></span>
+      <span class="arrow">›</span>
+    </button>
+    <button class="mode-card" id="clockModeBtn">
+      <span class="mi">🕐</span>
+      <span><b>Clock Practice</b><small>6 tugas · geser jarum jam lalu tulis waktunya</small></span>
+      <span class="arrow">›</span>
+    </button>
+    <div class="section-title">Materi Chapter 5–8</div>
+    <div class="topic-grid">
+      <div class="topic-item"><span class="em">🍎</span><span>Adding two sets<small>Chapter 5</small></span></div>
+      <div class="topic-item"><span class="em">🔗</span><span>Number bonds<small>Chapter 5</small></span></div>
+      <div class="topic-item"><span class="em">➖</span><span>Take away<small>Chapter 5</small></span></div>
+      <div class="topic-item"><span class="em">🥇</span><span>Position &amp; ordinal<small>Chapter 6</small></span></div>
+      <div class="topic-item"><span class="em">⭕</span><span>Venn diagrams<small>Chapter 7</small></span></div>
+      <div class="topic-item"><span class="em">📅</span><span>Days &amp; time<small>Chapter 8</small></span></div>
+    </div>
+    <p class="hint-small">Pilih jawaban yang paling benar, ya!</p>
+  </section>
+
+  <!-- MC -->
+  <section class="screen" id="screenQuiz">
+    <div class="progress-wrap">
+      <div class="progress-meta"><span id="qCounter">Soal 1 dari 24</span><strong id="qScore">0 poin</strong></div>
+      <div class="bar"><i id="barFill"></i></div>
+    </div>
+    <div class="question-card">
+      <span class="topic-badge" id="qTopic">Topik</span>
+      <span class="q-emoji" id="qEmoji">🧮</span>
+      <div class="q-text" id="qText">Pertanyaan?</div>
+      <div class="q-id" id="qId">Terjemahan</div>
+      <button class="speak-q" id="speakQBtn">🔊 Dengar soal</button>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"><span class="fi" id="feedbackIcon">✅</span><span id="feedbackText"></span></div>
+    </div>
+    <button class="btn next-btn" id="nextBtn">Lanjut →</button>
+  </section>
+
+  <!-- CLOCK -->
+  <section class="screen" id="screenClock">
+    <div class="progress-wrap">
+      <div class="progress-meta"><span id="cCounter">Task 1 dari 6</span><strong id="cScore">0 / 6</strong></div>
+      <div class="bar"><i id="cBarFill"></i></div>
+    </div>
+    <div class="clock-card">
+      <span class="topic-badge">🕐 Clock Practice · Chapter 8</span>
+      <div class="q-text" id="cPrompt">Draw the hands.</div>
+      <div class="q-id" id="cId">Petunjuk</div>
+      <div class="clock-wrap">
+        <svg id="clockSvg" viewBox="0 0 240 240" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="120" cy="120" r="113" fill="#fffaf7" stroke="#f47245" stroke-width="5"/>
+          <circle cx="120" cy="120" r="101" fill="#fff" stroke="#f6ded3" stroke-width="2"/>
+          <g id="clockTicks"></g>
+          <g id="clockNums"></g>
+          <line id="hourHand" class="hand" x1="120" y1="120" x2="120" y2="70" stroke="#c9542c" stroke-width="9" stroke-linecap="round"/>
+          <line id="minHand" class="hand" x1="120" y1="120" x2="120" y2="45" stroke="#6c5ce7" stroke-width="6" stroke-linecap="round"/>
+          <circle id="hourKnob" class="knob" cx="120" cy="70" r="11" fill="#c9542c" stroke="#fff" stroke-width="3"/>
+          <circle id="minKnob" class="knob" cx="120" cy="45" r="10" fill="#6c5ce7" stroke="#fff" stroke-width="3"/>
+          <circle cx="120" cy="120" r="7" fill="#f47245" stroke="#fff" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="digital" id="cDigital">12:00 <small id="cDigitalWord">o'clock</small></div>
+      <div class="block-label">1️⃣ Geser jarum jam (pilih jam)</div>
+      <div class="hour-pad" id="hourPad"></div>
+      <div class="block-label">2️⃣ Pilih jarum menit</div>
+      <div class="min-row">
+        <button class="min-btn" data-m="0">🕛 Tepat jam (12)</button>
+        <button class="min-btn" data-m="30">🕜 Setengah (6)</button>
+      </div>
+      <div class="block-label">3️⃣ Tulis waktunya (pilih tulisan)</div>
+      <div class="write-chips" id="writeChips"></div>
+      <div class="feedback" id="cFeedback"><span class="fi" id="cFeedbackIcon">✅</span><span id="cFeedbackText"></span></div>
+    </div>
+    <div class="clock-footer">
+      <button class="btn purple" id="checkClockBtn">✓ Cek Jawaban</button>
+      <button class="btn next-btn" id="cNextBtn">Lanjut →</button>
+    </div>
+  </section>
+
+  <!-- RESULT -->
+  <section class="screen" id="screenResult">
+    <div class="result">
+      <span class="medal" id="medal">🏆</span>
+      <h2 id="resultTitle">Hebat!</h2>
+      <p class="sub" id="resultSub">Kamu sudah selesai!</p>
+      <div class="score-box">
+        <div><div class="score-num" id="scoreNum">0<small>/120</small></div><div class="stars" id="stars">⭐⭐⭐</div></div>
+        <div class="score-div"></div>
+        <div><div class="pct-num" id="pctNum">0%</div><div class="sub" style="font-size:11px">Nilai</div></div>
+      </div>
+      <div class="breakdown"><h3 id="breakdownTitle">Hasil per topik</h3><div id="breakdownList"></div></div>
+    </div>
+    <div class="result-btns">
+      <button class="btn ghost" id="homeBtn">🏠 Beranda</button>
+      <button class="btn" id="retryBtn">🔁 Ulangi</button>
+    </div>
+  </section>
+</div>
+
+<script>
+/* ============ 1. MC DATA ============ */
+const MC_TOPICS = [
+  {id:'add',   name:'Add two sets',      em:'🍎', ch:'Chapter 5'},
+  {id:'bonds', name:'Number bonds',     em:'🔗', ch:'Chapter 5'},
+  {id:'sub',   name:'Take away',        em:'➖', ch:'Chapter 5'},
+  {id:'position',name:'Position & ordinal',em:'🥇',ch:'Chapter 6'},
+  {id:'venn',  name:'Venn diagrams',    em:'⭕', ch:'Chapter 7'},
+  {id:'time',  name:'Days & time',      em:'🕐', ch:'Chapter 8'},
+];
+const MC_BANK = [
+  // Chapter 5 — add two sets
+  {t:'add',e:'🍎',q:'You have 2 apples. I give you 3 more. How many apples now?',id:'Kamu punya 2 apel, lalu dapat 3 lagi. Jadi berapa?',o:['4','5','6','7'],a:'5',tip:'2 + 3 = 5.'},
+  {t:'add',e:'➕',q:'What is 4 + 3?',id:'Berapa 4 + 3?',o:['6','7','8','9'],a:'7',tip:'4 ditambah 3 sama dengan 7.'},
+  {t:'add',e:'🐦',q:'There are 6 birds. 3 more birds come. How many birds?',id:'Ada 6 burung, datang 3 lagi. Jadi berapa?',o:['8','9','10','7'],a:'9',tip:'6 + 3 = 9.'},
+  {t:'add',e:'🔵',q:'Join the two sets: 🔵🔵🔵🔵🔵 and 🔵🔵🔵. How many?',id:'Gabungkan dua kelompok: 5 bola dan 3 bola. Jadi berapa?',o:['7','8','9','6'],a:'8',tip:'5 + 3 = 8.'},
+  // Chapter 5 — number bonds
+  {t:'bonds',e:'🔗',q:'3 + ? = 10',id:'3 + ? = 10',o:['6','7','8','9'],a:'7',tip:'3 + 7 = 10. Itu pasangan bilangan 10.'},
+  {t:'bonds',e:'🔟',q:'What is 6 + 4?',id:'Berapa 6 + 4?',o:['9','10','11','8'],a:'10',tip:'6 dan 4 bersatu jadi 10.'},
+  {t:'bonds',e:'🧩',q:'Which number bond makes 10?',id:'Pasangan bilangan mana yang hasilnya 10?',o:['5 + 2','6 + 4','3 + 3','4 + 3'],a:'6 + 4',tip:'6 + 4 = 10.'},
+  {t:'bonds',e:'➗',q:'10 = 7 + ?',id:'10 = 7 + ?',o:['2','3','4','5'],a:'3',tip:'7 + 3 = 10.'},
+  // Chapter 5 — subtract by taking away
+  {t:'sub',e:'🍬',q:'You have 8 sweets. You give away 2. How many left?',id:'Kamu punya 8 permen, diberikan 2. Sisa berapa?',o:['5','6','7','4'],a:'6',tip:'8 − 2 = 6.'},
+  {t:'sub',e:'➖',q:'What is 9 − 4?',id:'Berapa 9 − 4?',o:['4','5','6','7'],a:'5',tip:'9 dikurangi 4 sama dengan 5.'},
+  {t:'sub',e:'🦆',q:'There are 7 ducks. 2 swim away. How many left?',id:'Ada 7 bebek, 2 berenang pergi. Sisa berapa?',o:['4','5','6','3'],a:'5',tip:'7 − 2 = 5.'},
+  {t:'sub',e:'🔟',q:'What is 10 − 6?',id:'Berapa 10 − 6?',o:['3','4','5','6'],a:'4',tip:'10 − 6 = 4.'},
+  // Chapter 6 — position & ordinal
+  {t:'position',e:'🥇',q:'The ordinal number for 1 is ...',id:'Bilangan ordinal untuk 1 adalah ...',o:['first','second','third','fourth'],a:'first',tip:'1 = first (pertama).'},
+  {t:'position',e:'🐇',q:'In the race 🐇 🐢 🐿️, who is second?',id:'Dalam lomba 🐇 🐢 🐿️, siapa yang kedua?',o:['Rabbit','Tortoise','Squirrel','Nobody'],a:'Tortoise',tip:'Urutan: first = rabbit, second = tortoise.'},
+  {t:'position',e:'🐱',q:'The cat is ___ the box. (🐱 di atas 📦)',id:'Kucing itu ___ kotak.',o:['on','under','in','behind'],a:'on',tip:'Di atas = on.'},
+  {t:'position',e:'↔️',q:'Which word means "di antara"?',id:'Kata mana yang artinya "di antara"?',o:['between','behind','under','next to'],a:'between',tip:'Between = di antara dua benda.'},
+  // Chapter 7 — Venn diagrams
+  {t:'venn',e:'⭕',q:'A Venn diagram uses ...',id:'Diagram Venn memakai ...',o:['squares','overlapping circles','triangles','one straight line'],a:'overlapping circles',tip:'Diagram Venn memakai dua lingkaran yang bertumpang tindih.'},
+  {t:'venn',e:'🧩',q:'The middle part shows things that are ...',id:'Bagian tengah menunjukkan benda yang ...',o:['in both groups','only in group A','only in group B','outside all groups'],a:'in both groups',tip:'Tengah = masuk kedua kelompok.'},
+  {t:'venn',e:'🦆',q:'Which fits BOTH "has wings" and "can swim"?',id:'Mana yang masuk "bersayap" DAN "bisa berenang"?',o:['Duck','Lion','Cow','Snake'],a:'Duck',tip:'Bebek punya sayap dan bisa berenang.'},
+  {t:'venn',e:'📊',q:'Why do we sort data?',id:'Kenapa kita mengelompokkan data?',o:['to put things into groups','to make them disappear','to count backwards','to draw clocks'],a:'to put things into groups',tip:'Sorting = memasukkan benda ke dalam kelompok.'},
+  // Chapter 8 — days & time
+  {t:'time',e:'📅',q:'The day after Monday is ...',id:'Hari setelah Senin adalah ...',o:['Sunday','Tuesday','Saturday','Friday'],a:'Tuesday',tip:'Senin → Selasa (Tuesday).'},
+  {t:'time',e:'🗓️',q:'How many days are in one week?',id:'Berapa hari dalam satu minggu?',o:['5','6','7','12'],a:'7',tip:'Satu minggu punya 7 hari.'},
+  {t:'time',e:'🕐',q:'At 4 o\'clock, the minute hand points to ...',id:'Pukul 4 tepat, jarum menit menunjuk ...',o:['12','3','4','6'],a:'12',tip:'Kalau tepat jam, jarum menit di angka 12.'},
+  {t:'time',e:'🕜',q:'"Half past 3" — where is the minute hand?',id:'"Setengah jam 3" — jarum menit di mana?',o:['12','3','6','9'],a:'6',tip:'Half past = jarum menit di angka 6.'},
+];
+
+/* ============ 2. CLOCK TASKS ============ */
+const CLOCK_TASKS = [
+  {h:3,m:0, id:'Gambar pukul 3 tepat.'},
+  {h:7,m:0, id:'Gambar pukul 7 tepat.'},
+  {h:2,m:30,id:'Gambar setengah jam 2.'},
+  {h:10,m:0,id:'Gambar pukul 10 tepat.'},
+  {h:6,m:30,id:'Gambar setengah jam 6.'},
+  {h:12,m:0,id:'Gambar pukul 12 tepat.'},
+];
+
+/* ============ 3. STATE & HELPERS ============ */
+let mode='mc';
+let questions=[],idx=0,score=0,answered=false,mcPerTopic={};
+let cIdx=0,cScores=[],cChecked=false,cHour=12,cMin=0,cWritten=null,cChoices=[];
+let soundOn=true,audioCtx=null;
+const POINT=5;
+const $=id=>document.getElementById(id);
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));$(id).classList.add('active');$(id).scrollTop=0;}
+function tone(f,d,type){
+  if(!soundOn)return;
+  try{audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
+    const o=audioCtx.createOscillator(),g=audioCtx.createGain();o.type=type||'sine';o.frequency.value=f;
+    g.gain.setValueAtTime(.0001,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.16,audioCtx.currentTime+.02);
+    g.gain.exponentialRampToValueAtTime(.0001,audioCtx.currentTime+d);
+    o.connect(g);g.connect(audioCtx.destination);o.start();o.stop(audioCtx.currentTime+d+.02);
+  }catch(e){}
+}
+function goodSound(){tone(660,.13,'sine');setTimeout(()=>tone(880,.19,'sine'),110);}
+function badSound(){tone(220,.24,'triangle');}
+function speak(t){
+  if(!('speechSynthesis' in window)){alert('Browser tidak mendukung fitur suara.');return;}
+  window.speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(t);u.lang='en-US';u.rate=.82;window.speechSynthesis.speak(u);
+}
+function confetti(){
+  const app=$('app'),colors=['#ff9f43','#ff6b6b','#6c5ce7','#22c55e','#facc15','#ec4899'];
+  for(let i=0;i<36;i++){const c=document.createElement('div');c.className='confetti';
+    c.style.left=Math.random()*100+'%';c.style.background=colors[i%colors.length];
+    c.style.animationDuration=(1.8+Math.random()*1.7)+'s';c.style.animationDelay=(Math.random()*.5)+'s';
+    app.appendChild(c);setTimeout(()=>c.remove(),4200);}
+}
+
+/* ============ 4. MC FLOW ============ */
+function startMC(){
+  mode='mc';
+  questions=MC_BANK.map(q=>{const o=shuffle(q.o);return {...q,options:o,correct:o.indexOf(q.a)};});
+  idx=0;score=0;answered=false;mcPerTopic={};MC_TOPICS.forEach(t=>mcPerTopic[t.id]={got:0,total:0});
+  showScreen('screenQuiz');renderMC();
+}
+function renderMC(){
+  const q=questions[idx],t=MC_TOPICS.find(x=>x.id===q.t);
+  $('qCounter').textContent=`Soal ${idx+1} dari ${questions.length}`;
+  $('qScore').textContent=`${score} poin`;
+  $('barFill').style.width=(idx/questions.length*100)+'%';
+  $('qTopic').textContent=`${t.em} ${t.name} · ${t.ch}`;
+  $('qEmoji').textContent=q.e;$('qText').textContent=q.q;$('qId').textContent=q.id;
+  const box=$('options');box.innerHTML='';
+  q.options.forEach((o,i)=>{const b=document.createElement('button');b.className='opt';b.type='button';
+    b.innerHTML=`<span class="letter">${String.fromCharCode(65+i)}</span><span>${o}</span>`;
+    b.addEventListener('click',()=>answerMC(i));box.appendChild(b);});
+  $('feedback').className='feedback';$('nextBtn').classList.remove('show');answered=false;
+}
+function answerMC(i){
+  if(answered)return;answered=true;
+  const q=questions[idx],ok=i===q.correct;
+  [...$('options').children].forEach((b,j)=>{
+    if(j===q.correct)b.classList.add('correct');else if(j===i)b.classList.add('wrong');else b.classList.add('dim');});
+  const fb=$('feedback');fb.className='feedback show '+(ok?'ok':'no');
+  $('feedbackIcon').textContent=ok?'🎉':'💡';
+  $('feedbackText').textContent=ok?`Benar! +${POINT} poin. ${q.tip}`:`Belum tepat. Jawaban: ${q.a}. ${q.tip}`;
+  if(ok){score+=POINT;mcPerTopic[q.t].got++;goodSound();}else badSound();
+  mcPerTopic[q.t].total++;
+  $('qScore').textContent=`${score} poin`;
+  $('barFill').style.width=((idx+1)/questions.length*100)+'%';
+  $('nextBtn').classList.add('show');
+  $('nextBtn').textContent=idx===questions.length-1?'Lihat Hasil 🎉':'Lanjut →';
+}
+function nextMC(){if(!answered)return;if(idx<questions.length-1){idx++;renderMC();}else showResult();}
+
+/* ============ 5. CLOCK FLOW ============ */
+const svgNS='http://www.w3.org/2000/svg';
+function buildClockFace(){
+  const ticks=$('clockTicks'),nums=$('clockNums');
+  ticks.innerHTML='';nums.innerHTML='';
+  for(let i=0;i<60;i++){
+    const a=(i*6-90)*Math.PI/180,r1=i%5===0?98:104,r2=109;
+    const l=document.createElementNS(svgNS,'line');
+    l.setAttribute('x1',120+Math.cos(a)*r1);l.setAttribute('y1',120+Math.sin(a)*r1);
+    l.setAttribute('x2',120+Math.cos(a)*r2);l.setAttribute('y2',120+Math.sin(a)*r2);
+    l.setAttribute('stroke',i%5===0?'#c9542c':'#f6cbb8');l.setAttribute('stroke-width',i%5===0?'2.5':'1');
+    ticks.appendChild(l);
+  }
+  for(let n=1;n<=12;n++){
+    const a=(n*30-90)*Math.PI/180;
+    const t=document.createElementNS(svgNS,'text');
+    t.setAttribute('x',120+Math.cos(a)*86);t.setAttribute('y',120+Math.sin(a)*86+5);
+    t.setAttribute('text-anchor','middle');t.setAttribute('font-size','16');t.setAttribute('font-weight','800');
+    t.setAttribute('fill','#5b4438');t.textContent=n;nums.appendChild(t);
+  }
+  const pad=$('hourPad');pad.innerHTML='';
+  for(let h=1;h<=12;h++){
+    const b=document.createElement('button');b.className='hour-btn';b.textContent=h;b.dataset.h=h;
+    b.addEventListener('click',()=>{cHour=+h;updateHands();});pad.appendChild(b);
+  }
+}
+function updateHands(){
+  const ha=(cHour%12)*30*Math.PI/180,ma=(cMin===0?0:180)*Math.PI/180;
+  const hx=120+Math.sin(ha)*52,hy=120-Math.cos(ha)*52;
+  const mx=120+Math.sin(ma)*78,my=120-Math.cos(ma)*78;
+  const hh=$('hourHand'),mh=$('minHand');
+  hh.setAttribute('x2',hx);hh.setAttribute('y2',hy);
+  mh.setAttribute('x2',mx);mh.setAttribute('y2',my);
+  $('hourKnob').setAttribute('cx',hx);$('hourKnob').setAttribute('cy',hy);
+  $('minKnob').setAttribute('cx',mx);$('minKnob').setAttribute('cy',my);
+  [...$('hourPad').children].forEach(b=>b.classList.toggle('pick',+b.dataset.h===cHour));
+  [...document.querySelectorAll('.min-btn')].forEach(b=>b.classList.toggle('pick',+b.dataset.m===cMin));
+  const word=cMin===0?"o'clock":'half past';
+  $('cDigital').innerHTML=`${String(cHour).padStart(2,'0')}:${cMin===0?'00':'30'} <small>${word}</small>`;
+}
+function wordFor(h,m){return m===0?`${h} o'clock`:`half past ${h}`;}
+function startClock(){
+  mode='clock';buildClockFace();cIdx=0;cScores=new Array(CLOCK_TASKS.length).fill(null);
+  showScreen('screenClock');renderClock();
+}
+function renderClock(){
+  const t=CLOCK_TASKS[cIdx];
+  $('cCounter').textContent=`Task ${cIdx+1} dari ${CLOCK_TASKS.length}`;
+  $('cScore').textContent=`${cScores.filter(v=>v!==null).length} / ${CLOCK_TASKS.length}`;
+  $('cBarFill').style.width=(cIdx/CLOCK_TASKS.length*100)+'%';
+  $('cPrompt').textContent=`Draw the hands to show ${wordFor(t.h,t.m)}.`;
+  $('cId').textContent=t.id;
+  cHour=12;cMin=0;cWritten=null;cChecked=false;
+  const correct=wordFor(t.h,t.m);
+  let wrong;
+  if(t.m===0)wrong=[`half past ${t.h}`,`${(t.h%12)+1} o'clock`];
+  else wrong=[`${t.h} o'clock`,`${(t.h%12)+1} o'clock`];
+  cChoices=shuffle([correct,...wrong]);
+  const box=$('writeChips');box.innerHTML='';
+  cChoices.forEach(w=>{const b=document.createElement('button');b.className='wchip';b.textContent=w;
+    b.addEventListener('click',()=>{cWritten=w;[...box.children].forEach(x=>x.classList.toggle('pick',x===b));});box.appendChild(b);});
+  $('cFeedback').className='feedback';
+  $('checkClockBtn').style.display='flex';
+  $('checkClockBtn').textContent='✓ Cek Jawaban';
+  $('cNextBtn').classList.remove('show');
+  updateHands();
+}
+function checkClock(){
+  if(cChecked)return;cChecked=true;
+  const t=CLOCK_TASKS[cIdx];
+  const handsOK=cHour===t.h&&cMin===t.m;
+  const wordOK=cWritten===wordFor(t.h,t.m);
+  const ok=handsOK&&wordOK;
+  const fb=$('cFeedback');fb.className='feedback show '+(ok?'ok':'no');
+  $('cFeedbackIcon').textContent=ok?'🎉':'💡';
+  $('cFeedbackText').textContent=ok?`Benar! +1 poin. Jam menunjukkan ${wordFor(t.h,t.m)}.`
+    :`Belum tepat. Jawaban: ${wordFor(t.h,t.m)} — jarum jam ke ${t.h}, jarum menit ke ${t.m===0?'12':'6'}.`;
+  cScores[cIdx]=ok?1:0;
+  if(ok)goodSound();else badSound();
+  $('cScore').textContent=`${cScores.filter(v=>v!==null).length} / ${CLOCK_TASKS.length}`;
+  $('cBarFill').style.width=((cIdx+1)/CLOCK_TASKS.length*100)+'%';
+  $('checkClockBtn').style.display='none';
+  $('cNextBtn').classList.add('show');
+  $('cNextBtn').textContent=cIdx===CLOCK_TASKS.length-1?'Lihat Hasil 🎉':'Lanjut →';
+}
+function nextClock(){if(!cChecked)return;if(cIdx<CLOCK_TASKS.length-1){cIdx++;renderClock();}else showResult();}
+/* drag hands */
+function svgPoint(e){const s=$('clockSvg'),p=s.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(s.getScreenCTM().inverse());}
+function posFromPoint(pt){const dx=pt.x-120,dy=pt.y-120;let deg=Math.atan2(dx,-dy)*180/Math.PI;if(deg<0)deg+=360;return (Math.round(deg/30)%12)||12;}
+let dragging=null;
+function initDrag(){
+  const s=$('clockSvg');
+  ['hourKnob','hourHand'].forEach(id=>$(id).addEventListener('pointerdown',e=>{dragging='hour';e.preventDefault();}));
+  ['minKnob','minHand'].forEach(id=>$(id).addEventListener('pointerdown',e=>{dragging='min';e.preventDefault();}));
+  s.addEventListener('pointerdown',e=>{
+    if(e.target.closest('.hand,.knob'))return;
+    dragging='hour';moveHand(e);
+  });
+  s.addEventListener('pointermove',e=>{if(dragging)moveHand(e);});
+  ['pointerup','pointercancel','pointerleave'].forEach(ev=>s.addEventListener(ev,()=>dragging=null));
+}
+function moveHand(e){
+  const pos=posFromPoint(svgPoint(e));
+  if(dragging==='hour')cHour=pos;
+  else cMin=(pos>=5&&pos<=7)?30:0;
+  updateHands();
+}
+
+/* ============ 6. RESULT ============ */
+function showResult(){
+  showScreen('screenResult');
+  const isMC=mode==='mc';
+  const max=isMC?questions.length*POINT:CLOCK_TASKS.length;
+  const total=isMC?score:cScores.reduce((a,b)=>a+(b||0),0);
+  const pct=Math.round(total/max*100);
+  $('scoreNum').innerHTML=`${total}<small>/${max}</small>`;
+  $('pctNum').textContent=pct+'%';
+  let title,sub,medal;
+  if(pct>=90){title='Luar Biasa!';sub='Kamu benar-benar pintar!';medal='🏆';}
+  else if(pct>=70){title='Hebat!';sub='Kerja bagus, pertahankan ya!';medal='🥇';}
+  else if(pct>=50){title='Bagus!';sub='Terus berlatih, kamu pasti makin pintar.';medal='🥈';}
+  else{title='Semangat!';sub='Jangan menyerah, coba lagi ya!';medal='🌱';}
+  $('stars').textContent=pct>=90?'⭐⭐⭐':pct>=70?'⭐⭐':'⭐';
+  $('resultTitle').textContent=title;$('resultSub').textContent=sub;$('medal').textContent=medal;
+  $('breakdownTitle').textContent=isMC?'Hasil per topik':'Hasil per jam';
+  const list=$('breakdownList');list.innerHTML='';
+  if(isMC){
+    MC_TOPICS.forEach(t=>{const d=mcPerTopic[t.id],p=d.total?Math.round(d.got/d.total*100):0;
+      addRow(list,`${t.em} ${t.name}`,`${d.got}/${d.total} ✓`,p);});
+  }else{
+    CLOCK_TASKS.forEach((t,i)=>{const v=cScores[i]||0;
+      addRow(list,`🕐 ${wordFor(t.h,t.m)}`,`${v}/1`,v*100);});
+  }
+  if(pct>=70)confetti();
+  if(pct>=90){goodSound();setTimeout(goodSound,180);}else tone(520,.3,'sine');
+}
+function addRow(list,label,right,pct){
+  const row=document.createElement('div');row.className='br-row';
+  row.innerHTML=`<div class="br-top"><span>${label}</span><span>${right}</span></div><div class="br-bar"><i></i></div>`;
+  list.appendChild(row);requestAnimationFrame(()=>row.querySelector('i').style.width=pct+'%');
+}
+
+/* ============ 7. EVENTS ============ */
+$('mcModeBtn').addEventListener('click',startMC);
+$('clockModeBtn').addEventListener('click',startClock);
+$('nextBtn').addEventListener('click',nextMC);
+$('speakQBtn').addEventListener('click',()=>speak(questions[idx].q));
+$('checkClockBtn').addEventListener('click',checkClock);
+$('cNextBtn').addEventListener('click',nextClock);
+[...document.querySelectorAll('.min-btn')].forEach(b=>b.addEventListener('click',()=>{cMin=+b.dataset.m;updateHands();}));
+$('retryBtn').addEventListener('click',()=>mode==='mc'?startMC():startClock());
+$('homeBtn').addEventListener('click',()=>{
+  document.querySelectorAll('.confetti').forEach(c=>c.remove());window.speechSynthesis?.cancel();showScreen('screenStart');});
+$('soundBtn').addEventListener('click',()=>{
+  soundOn=!soundOn;$('soundBtn').textContent=soundOn?'🔊':'🔇';if(soundOn)tone(700,.1,'sine');});
+initDrag();
+</script>
+</body>
+</html>
